@@ -2,7 +2,7 @@
 
 ## Requirements:
 - Docker installed on the host machine
-- The `Ocp-Apim-Subscription-Key`, placed inside the Makefile env vars - errors will be raised if missing
+- The `Ocp-Apim-Subscription-Key`, placed inside the `Makefile` env vars - errors will be raised if missing
 
 ## Summary:
 - The application is run as a docker container to provide consistency across environments
@@ -11,7 +11,7 @@
 
 
 ## Instructions for use:
-1. Put the Ocp-Apim-Subscription-Key key inside the Makefile `API_KEY` environment variable (line 19 in Makefile) 
+1. Put the `Ocp-Apim-Subscription-Key` key inside the Makefile `API_KEY` environment variable (line 19 in `Makefile`) 
     - see [here](https://github.com/airelogic/tech-test-portal/blob/main/T2-Lifestyle-Checker/Readme.md#api-details) for more details.
 2. From the cli run:
     - `make build`
