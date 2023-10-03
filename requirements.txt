@@ -1,0 +1,2 @@
+# put required modules here, installed to img as part of 'make build'
+requests
