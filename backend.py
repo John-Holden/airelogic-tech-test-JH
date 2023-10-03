@@ -7,12 +7,16 @@ import logging
 from typing import Tuple
 from datetime import datetime
 
-
+# Min age to use the service
 MIN_AGE = 16
+# al endpoint 
 URL = "https://al-tech-test-apim.azure-api.net/tech-test/t2/patients/"
-DT_PATTERN = re.compile(r'^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$') # dd-mm-yyyy
-NHS_NUMBER_PATTERN = re.compile(r'^\d{9}$') # NHS number pattern (as given in readme, real one should be 10)
-DECISION_BOUND = 3 # Decision boundary, if more than this int patient will be required to come in for an appointment
+# Enforced datetime pattern, dd-mm-yyyy. Primarily for patient age.
+DT_PATTERN = re.compile(r'^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$')
+# NHS id pattern (as given in questionsheet readme, the real one should be 10?)
+NHS_NUMBER_PATTERN = re.compile(r'^\d{9}$')
+# Score decision boundary - if more than this int patient will be prompted to come in for an appointment
+DECISION_BOUND = 3
 
 
 def get_env(env_name: str) -> str:
