@@ -12,11 +12,13 @@ help: ## This help.
 build:
 	docker build -t airelogic-tech-test .
 
+
 run:
+	# Place API KEY below: -e API_KEY={HERE}
 	@echo "Running container as deamon..."
 	docker run -d --rm --name airelogic-backend \
 	-e QCONF_PATH=/etc/QUESTION_CONF.toml \
-	-e API_KEY= \
+	-e API_KEY=\
 	-e LOGLEVEL=INFO \
 	airelogic-tech-test
 

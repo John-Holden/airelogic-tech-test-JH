@@ -78,7 +78,7 @@ def get_patient_details() -> Tuple[str]:
     """
         Collect patient details based on user input.
     """
-    
+
     nhs_number = input("Enter your nhs number: ")
     surname = input("Enter you surname: ")
     dob = input("Enter your dob (dd-mm-yyyy): ")
@@ -191,10 +191,10 @@ def decision(score: int) -> None:
     """
     
     if score <= DECISION_BOUND:
-        logging.info("Thank you for answering our questions, we don't need to see you at this time. Keep up the good work!")
+        logging.info(" Thank you for answering our questions, we don't need to see you at this time. Keep up the good work!")
         return
         
-    logging.info("We think there are some simple things you could do to improve you quality of life, please phone to book an appointment")
+    logging.info(" We think there are some simple things you could do to improve you quality of life, please phone to book an appointment")
     return
 
 
