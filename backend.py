@@ -9,10 +9,8 @@ from datetime import datetime
 
 # Min age to use the service
 MIN_AGE = 16
-# al endpoint 
+# AL endpoint 
 URL = "https://al-tech-test-apim.azure-api.net/tech-test/t2/patients/"
-# Enforced datetime pattern, dd-mm-yyyy. Primarily for patient age.
-DT_PATTERN = re.compile(r'^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$')
 # NHS id pattern (as given in questionsheet readme, the real one should be 10?)
 NHS_NUMBER_PATTERN = re.compile(r'^\d{9}$')
 # Score decision boundary - if more than this int patient will be prompted to come in for an appointment
@@ -30,7 +28,7 @@ def get_dob_dt(dt: str) -> datetime.date:
     try:
         dt = datetime.strptime(dt, '%d-%m-%Y')
     except Exception as e:
-        logging.exception(f"[e] Could not convert {dt} to dd-mm-yyyy!")
+        logging.exception(f"[e] Could not convert {dt} to fmt: dd-mm-yyyy!")
         raise e
     return dt
 
@@ -89,10 +87,10 @@ def get_patient_details() -> Tuple[str]:
     return nhs_number, surname, dob
 
 
-def validate_req(nhs_number: str, surname: str, input_dob: datetime.date) -> int:
+def validate_req(nhs_number: str, surname: str, input_dob: datetime.date) -> None:
     """
-        Validates the nhs_number against surname and dob.
-        Returns age of patient.
+        Validates the input nhs_number, surname and dob against any response data.
+        - raises errors if not found, or unmatched
     """
     
     api_key = get_env("API_KEY")
@@ -131,12 +129,15 @@ def validate_req(nhs_number: str, surname: str, input_dob: datetime.date) -> int
         logging.exception(f"[e] You are not eligible for this service.")
         raise Exception(f"Patient is under {MIN_AGE}.")
 
-    return age
+    return
 
 
 def question_score(question_data: dict, age: int) -> int:
     """
         Get score for patient based on input question dict and user input. 
+        - loops through question dict
+        - depending on yes/no patient input, will match the patients age against a score
+        Returns the score
     """
 
     try:
@@ -191,7 +192,8 @@ def question_score(question_data: dict, age: int) -> int:
 
 def decision(score: int) -> None:
     """
-        output std based on decision logic
+        Output to std based on decision logic
+        - will either ask the user to come in for an appt or not...
     """
     
     if score <= DECISION_BOUND:
@@ -203,8 +205,7 @@ def decision(score: int) -> None:
 
 
 if __name__ == "__main__":
-
-    # Set logging
+    # Set logging - defaults to info
     log_level = os.environ.get('LOGLEVEL', 'INFO')
     logging.basicConfig(level=log_level)
 
